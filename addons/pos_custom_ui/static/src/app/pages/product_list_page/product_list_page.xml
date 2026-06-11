@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_custom_ui.ProductListPage">
+        <div class="o_self_product_list_page o_custom_product_list_page d-flex flex-column vh-100 overflow-hidden o_self_background o_self_fade">
+            <t t-set="has_sub_categories" t-value="this.state.subCategories?.length > 0"/>
+            <div class="bg-view border-bottom user-select-none" t-att-class="{'o_self_shadow_top': !has_sub_categories and this.scrollShadow.top }">
+                <div class="container o_self_container px-kiosk-p-0">
+                    <div class="category_container d-flex" t-custom-ref="category_container">
+                        <div class="category_list d-flex mw-100 mx-kiosk-p-auto py-3 px-kiosk-p-4 gap-0 gap-kiosk-p-3 overflow-x-auto overflow-y-hidden position-relative" t-custom-ref="category_list">
+                            <t t-foreach="this.state.topCategories" t-as="category" t-key="category.id">
+                                <t t-set="isSelectedCategory" t-value="category === this.topSelectedCategory"/>
+                                <button t-on-click="() => this.selectCategory(category)" class="category_btn btn d-flex flex-column align-items-center p-0 border-0" t-att-data-category-pill="category.id">
+                                    <img class="d-none d-kiosk-p-block mb-2 rounded-4 object-fit-cover transition-base" style="height: 110px; width: 110px;" t-attf-src="/web/image/pos.category/#{category.id}/image_128?unique=#{category.write_date}" draggable="false"/>
+                                    <div class="text-nowrap fw-medium rounded-pill px-3 py-1 d-flex align-items-center" t-att-class="{'text-bg-primary btn border-0': isSelectedCategory}">
+                                        <span class="text-nowrap fw-medium" t-out="category.name"/>
+                                    </div>
+                                </button>
+                            </t>
+                        </div>
+                        <div class="category_end flex-shrink-0 align-items-center" t-if="!this.selfOrder.kioskMode">
+                            <div class="ms-1 bg-secondary rounded-2 p-2 d-flex align-content-center align-items-center justify-content-center cursor-pointer" role="button" t-on-click="()=>this.displayCategoryList(this.state.topCategories)">
+                                <i class="fa fa-list-ul"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sub_category_container d-flex flex-shrink-0" t-custom-ref="sub_cat_container" t-att-class="{'show': has_sub_categories, 'o_self_shadow_top': has_sub_categories and this.scrollShadow.top }">
+                <div t-if="has_sub_categories" class="position-relative d-flex flex-nowrap flex-column w-100 text-bg-primary user-select-none">
+                    <div class="container o_self_container px-kiosk-p-0 d-flex">
+                        <div class="category_list d-flex mw-100 mx-kiosk-p-auto py-3 px-kiosk-p-4 gap-0 gap-kiosk-p-3 overflow-x-auto overflow-y-hidden" t-custom-ref="sub_category_list">
+                            <t t-set="isAllSelected" t-value="!this.selectedCategory.parent_id "/>
+                            <button t-on-click="() => this.selectCategory(this.topSelectedCategory)" class="child_category_btn child_category_all btn px-3 py-1 rounded-pill border-0" t-att-class="{'btn-light': isAllSelected, 'btn-link text-reset': !isAllSelected}">
+                                All
+                            </button>
+                            <t t-foreach="this.state.subCategories" t-as="child_category" t-key="child_category.id">
+                                <t t-set="isSelectedChildCategory" t-value="child_category === this.selectedCategory "/>
+                                <button t-on-click="() => this.selectCategory(child_category)" class="child_category_btn btn d-flex align-items-center gap-2 px-3 py-1 rounded-pill border-0" t-att-class="{'btn-light': isSelectedChildCategory, 'btn-link text-reset': !isSelectedChildCategory}">
+                                    <img class="d-none d-kiosk-p-block object-cover flex-shrink-0 rounded-3 my-1" t-attf-src="/web/image/pos.category/#{child_category.id}/image_128?unique=#{child_category.write_date}" draggable="false"/>
+                                    <span class="text-nowrap" t-out="child_category.name"/>
+                                </button>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-grow-1 overflow-y-auto o_self_fade position-relative" t-custom-ref="product_list">
+                <div class="product_container container o_self_container">
+                    <section t-foreach="this.productCategories" t-as="category" t-key="category.id" t-att-data-category="category.id" class="pb-3">
+                        <div class="fs-2 fw-bold ps-3 ps-sm-0 py-2 py-sm-3 py-lg-4" t-out="category.name" t-if="!this.selfOrder.kioskMode"/>
+                        <t t-set="productList" t-value="this.getProducts(category)"/>
+                        <div class="o_custom_product_grid">
+                            <div t-foreach="productList" t-as="product" t-key="product.id" class="o_custom_product_card_wrapper o_self_product_box">
+                                <t t-set="snoozed" t-value="this.selfOrder.isProductSnoozed(product)"/>
+                                <article role="button" t-on-click="(evt) => this.selectProduct(product, evt.target)" class="o_custom_product_card position-relative" t-att-class="{'opacity-25': snoozed}">
+                                    <div class="o_custom_product_image_frame">
+                                        <img class="o_custom_product_image" t-attf-src="/web/image/product.template/#{product.id}/image_512?unique=#{product.write_date}" loading="lazy"/>
+                                    </div>
+
+                                    <div class="o_custom_product_meta">
+                                        <div class="o_custom_product_topline">
+                                            <div class="o_custom_product_code" t-out="this.getProductCode(product)"/>
+                                            <div class="o_custom_price_usd" t-out="this.formatUsdPrice(product)"/>
+                                            <div class="o_custom_price_khr" t-out="this.formatKhrPrice(product)"/>
+                                        </div>
+
+                                        <div class="o_custom_product_names">
+                                            <div class="o_custom_product_name_km" t-if="this.getKhmerProductName(product)" t-out="this.getKhmerProductName(product)"/>
+                                            <div class="o_custom_product_name_en" t-out="this.getEnglishProductName(product)"/>
+                                            <div class="o_custom_product_name_zh" t-if="this.getChineseProductName(product)" t-out="this.getChineseProductName(product)"/>
+                                            <div t-if="snoozed" class="badge mt-1 rounded-pill text-bg-danger w-auto">Out of stock</div>
+                                        </div>
+                                    </div>
+
+                                    <t t-set="qty" t-value="this.state.quantityByProductTmplId[product.id]"/>
+                                    <span t-if="qty" t-out="qty" class="badge position-absolute top-0 end-0 m-1 rounded-4 fs-6 text-bg-primary fw-bold"/>
+                                </article>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div t-att-class="{'o_self_shadow_bottom': this.scrollShadow.bottom}">
+                <OrderWidget t-if="this.selfOrder.ordering" action.bind="this.review"/>
+            </div>
+        </div>
+    </t>
+</templates>

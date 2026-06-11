@@ -1,0 +1,164 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@100..900&display=swap");
+
+.o_custom_product_list_page {
+  .o_custom_product_card_wrapper.o_self_product_box,
+  .o_custom_product_card_wrapper.o_self_product_box .o_custom_product_card {
+    background: transparent !important;
+  }
+
+  .o_custom_product_grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem 0.8rem;
+    padding: 0.75rem 0.75rem 1rem;
+  }
+
+  .o_custom_product_card_wrapper {
+    min-width: 0;
+  }
+
+  .o_custom_product_card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    min-width: 0;
+  }
+
+  .o_custom_product_image_frame {
+    aspect-ratio: 2508 / 1672;
+    width: 100%;
+    overflow: hidden;
+    background: transparent;
+  }
+
+  .o_custom_product_image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+  }
+
+  .o_custom_product_meta {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    row-gap: 0.2rem;
+    min-width: 0;
+  }
+
+  .o_custom_product_topline {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: baseline;
+    column-gap: 0.35rem;
+    width: 100%;
+  }
+
+  .o_custom_product_code,
+  .o_custom_price_usd,
+  .o_custom_price_khr {
+    color: #d51111;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.05;
+  }
+
+  .o_custom_product_code {
+    font-size: 1.05rem;
+    text-align: center;
+    white-space: nowrap;
+    padding-top: 0.02rem;
+  }
+
+  .o_custom_product_names {
+    min-width: 0;
+    color: #111;
+    text-align: center;
+    line-height: 1.08;
+    width: 100%;
+  }
+
+  .o_custom_product_name_km {
+    font-family: "Noto Sans Khmer", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.35;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    word-break: break-word;
+    transform: none;
+    margin-bottom: 0.08rem;
+    padding-top: 0.03rem;
+    padding-bottom: 0.06rem;
+  }
+
+  .o_custom_product_name_en {
+    font-size: 0.92rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    margin-bottom: 0.08rem;
+  }
+
+  .o_custom_product_name_zh {
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.12;
+    word-break: break-word;
+  }
+
+  .o_custom_price_usd {
+    font-size: 1.05rem;
+    text-align: center;
+  }
+
+  .o_custom_price_khr {
+    font-size: 1rem;
+    letter-spacing: 0.01em;
+    text-align: center;
+  }
+
+  .product_container {
+    padding: 0;
+  }
+
+  .o_custom_product_card .badge.text-bg-danger {
+    font-size: 0.65rem;
+  }
+
+  @media (max-width: 420px) {
+    .o_custom_product_grid {
+      gap: 0.75rem 0.65rem;
+      padding: 0.65rem 0.65rem 0.9rem;
+    }
+
+    .o_custom_product_topline {
+      column-gap: 0.25rem;
+    }
+
+    .o_custom_product_code,
+    .o_custom_price_usd {
+      font-size: 0.96rem;
+    }
+
+    .o_custom_price_khr {
+      font-size: 0.92rem;
+    }
+
+    .o_custom_product_name_km {
+      font-size: 0.82rem;
+      line-height: 1.3;
+    }
+
+    .o_custom_product_name_en {
+      font-size: 0.82rem;
+    }
+
+    .o_custom_product_name_zh {
+      font-size: 0.78rem;
+    }
+  }
+}
