@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
     <t t-name="pos_custom_ui.ProductListPage">
-        <div class="o_self_product_list_page o_custom_product_list_page d-flex flex-column vh-100 overflow-hidden o_self_background o_self_fade">
+        <div class="o_self_product_list_page o_custom_product_list_page d-flex flex-column vh-100 overflow-hidden o_self_background o_self_fade"
+             t-attf-style="background-image:#{this.selfOrder.kioskBackgroundImageUrl};background-size: cover; background-position: center; background-repeat: no-repeat;">
             <t t-set="has_sub_categories" t-value="this.state.subCategories?.length > 0"/>
             <div class="bg-view border-bottom user-select-none" t-att-class="{'o_self_shadow_top': !has_sub_categories and this.scrollShadow.top }">
                 <div class="container o_self_container px-kiosk-p-0">

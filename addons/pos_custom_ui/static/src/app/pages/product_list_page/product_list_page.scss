@@ -1,6 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@100..900&display=swap");
 
 .o_custom_product_list_page {
+  .category_btn .text-nowrap.fw-medium,
+  .child_category_btn .text-nowrap,
+  .child_category_all {
+    font-family: "Noto Sans Khmer", "Noto Sans", sans-serif;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
   .o_custom_product_card_wrapper.o_self_product_box,
   .o_custom_product_card_wrapper.o_self_product_box .o_custom_product_card {
     background: transparent !important;
@@ -81,12 +89,13 @@
 
   .o_custom_product_name_km {
     font-family: "Noto Sans Khmer", sans-serif;
-    font-size: 0.9rem;
+    font-size: 1.02rem;
     font-weight: 600;
-    line-height: 1.35;
+    line-height: 1.45;
     white-space: normal;
     overflow: visible;
     text-overflow: clip;
+    overflow-wrap: anywhere;
     word-break: break-word;
     transform: none;
     margin-bottom: 0.08rem;
@@ -149,8 +158,11 @@
     }
 
     .o_custom_product_name_km {
-      font-size: 0.82rem;
-      line-height: 1.3;
+      font-size: 0.94rem;
+      line-height: 1.4;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
     }
 
     .o_custom_product_name_en {
