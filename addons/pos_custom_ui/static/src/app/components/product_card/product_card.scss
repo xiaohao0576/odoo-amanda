@@ -1,0 +1,60 @@
+// Desktop-only: larger product cards (6-8 per row) with image_512 and multi-language meta
+@media (min-width: 992px) {
+    .rightpane .product-list:not(.category-list) {
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    }
+
+    .o_pos_custom_image_frame {
+        aspect-ratio: 4 / 3;
+        overflow: hidden;
+    }
+
+    .o_pos_custom_image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .o_pos_custom_meta {
+        font-size: 0.72rem;
+        min-height: 4.5rem;
+    }
+
+    .o_pos_custom_topline {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        margin-bottom: 0.3rem;
+    }
+
+    .o_pos_custom_topline_cell {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 1.0rem;
+        font-weight: 500;
+        color: #dc3545;
+        line-height: 1.3;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .o_pos_custom_name_km {
+        font-size: 1rem;
+    }
+
+    .o_pos_custom_name_en {
+        font-size: 0.95rem;
+        font-weight: 600;
+    }
+
+    .o_pos_custom_name_zh {
+        font-size: 0.9rem;
+    }
+
+    .o_pos_custom_name_code {
+        font-size: 0.65rem;
+        color: #6c757d;
+    }
+}

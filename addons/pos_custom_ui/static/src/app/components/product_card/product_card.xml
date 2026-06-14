@@ -1,17 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
     <t t-name="pos_custom_ui.ProductCard" t-inherit="point_of_sale.ProductCard" t-inherit-mode="extension">
-        <xpath expr="//div[hasclass('product-name') and @t-out='this.props.name']" position="replace">
-            <div class="overflow-hidden lh-sm product-name"
-                t-att-class="{
-                    'no-image d-flex justify-content-center align-items-center text-center': !this.props.imageUrl,
-                    'mt-1': this.props.isComboPopup and !this.props.imageUrl
-                }"
-                t-attf-id="article_product_{{this.props.productId}}">
-                <t t-set="defaultCode" t-value="(this.props.product?.default_code || '').trim()"/>
-                <t t-if="defaultCode">(<t t-out="defaultCode"/>) </t>
-                <t t-out="this.props.name"/>
-            </div>
+        <xpath expr="//article[@role='button']" position="replace">
+            <t t-set="defaultCode" t-value="(this.props.product?.default_code || '').trim()"/>
+            <article tabindex="0"
+                role="button"
+                t-attf-class="{{this.props.class}} {{this.props.color ? `o_colorlist_item_color_transparent_${this.props.color}` : ''}} product-sortable product position-relative btn btn-light d-flex align-items-stretch p-0 rounded-3 text-start cursor-pointer {{ this.props.imgUrl ? 'd-flex align-items-stretch' : ''}} {{ this.props.available ? '' : 'opacity-50' }}"
+                t-on-keypress="(event) => event.code === 'Space' ? this.props.onClick(event) : ()=>{}"
+                t-on-click.stop="this.props.onClick"
+                t-att-data-product-id="this.props.productId"
+                t-att-data-pos_sequence="this.props.product.pos_sequence"
+                t-attf-aria-labelledby="article_product_{{this.props.productId}}">
+
+                <!-- Desktop layout: image_512 + multi-language meta -->
+                <t t-if="!this.ui.isSmall">
+                    <div t-if="this.props.imageUrl" class="o_pos_custom_image_frame w-100">
+                        <img class="o_pos_custom_image w-100 object-fit-cover rounded-top-3"
+                             t-attf-src="/web/image/product.template/{{this.props.productId}}/image_512?unique={{this.props.product.write_date}}"
+                             t-att-alt="this.props.name"
+                             draggable="false"
+                             loading="lazy"/>
+                    </div>
+                    <div class="o_pos_custom_meta px-2 pt-1 pb-2 w-100">
+                        <div class="o_pos_custom_topline">
+                            <div class="o_pos_custom_topline_cell o_pos_custom_code" t-out="this.getPosCustomCode()"/>
+                            <div class="o_pos_custom_topline_cell o_pos_custom_price_usd" t-out="this.getPosCustomUsdPrice()"/>
+                            <div class="o_pos_custom_topline_cell o_pos_custom_price_khr" t-out="this.getPosCustomKhrPrice()"/>
+                        </div>
+                        <div class="o_pos_custom_names lh-sm">
+                            <div t-if="this.getPosCustomKhmerName()"
+                                 t-out="this.getPosCustomKhmerName()"
+                                 class="o_pos_custom_name_km"/>
+                            <div t-out="this.getPosCustomEnglishName()"
+                                 class="o_pos_custom_name_en text-truncate"/>
+                            <div t-if="this.getPosCustomChineseName()"
+                                 t-out="this.getPosCustomChineseName()"
+                                 class="o_pos_custom_name_zh text-truncate"/>
+                        </div>
+                    </div>
+                    <span t-if="this.props.productCartQty"
+                        t-out="this.productQty"
+                        class="product-cart-qty position-absolute bottom-0 end-0 m-1 px-2 rounded bg-black text-white fs-5 fw-bolder"
+                        t-att-class="{'text-danger': this.productQty lt 0}"/>
+                    <span t-if="this.props.comboExtraPrice"
+                        style="font-size: 0.65rem;"
+                        class="price-extra px-1 py-0 rounded-1 text-bg-info position-absolute top-0 end-0">
+                        <t t-out="this.props.comboExtraPrice"/>
+                    </span>
+                    <t t-slot="quantityButtons"/>
+                </t>
+
+                <!-- Mobile layout: keep original behaviour -->
+                <t t-else="">
+                    <div t-if="this.props.imageUrl" class="product-img ratio ratio-4x3 rounded-top rounded-3">
+                        <img class="w-100 object-fit-cover bg-200 pe-none"
+                             t-att-src="this.props.imageUrl"
+                             t-att-alt="this.props.name"
+                             draggable="false"/>
+                    </div>
+                    <div class="product-content h-100 px-2 rounded-bottom-3 flex-shrink-1"
+                        t-att-class="{'d-flex' : !this.props.isComboPopup, 'my-1': !(this.props.isComboPopup and !this.props.imageUrl)}">
+                        <div class="overflow-hidden lh-sm product-name"
+                            t-att-class="{
+                                'no-image d-flex justify-content-center align-items-center text-center': !this.props.imageUrl,
+                                'mt-1': this.props.isComboPopup and !this.props.imageUrl
+                            }"
+                            t-attf-id="article_product_{{this.props.productId}}">
+                            <t t-if="defaultCode">(<t t-out="defaultCode"/>) </t>
+                            <t t-out="this.props.name"/>
+                        </div>
+                        <span t-if="this.props.productCartQty"
+                            t-out="this.productQty"
+                            class="product-cart-qty position-absolute bottom-0 end-0 m-1 px-2 rounded bg-black text-white fs-5 fw-bolder"
+                            t-att-class="{'text-danger': this.productQty lt 0}"/>
+                    </div>
+                    <span t-if="this.props.comboExtraPrice"
+                        style="font-size: 0.65rem;"
+                        class="price-extra px-1 py-0 rounded-1 text-bg-info position-absolute top-0 end-0">
+                        <t t-out="this.props.comboExtraPrice"/>
+                    </span>
+                    <t t-slot="quantityButtons"/>
+                </t>
+
+            </article>
         </xpath>
     </t>
 </templates>

@@ -15,7 +15,9 @@
             'pos_custom_ui/static/src/app/screens/product_screen/product_screen.xml',
             'pos_custom_ui/static/src/app/screens/product_screen/product_screen.scss',
             'pos_custom_ui/static/src/app/components/orderline/orderline.xml',
+            'pos_custom_ui/static/src/app/components/product_card/product_card.js',
             'pos_custom_ui/static/src/app/components/product_card/product_card.xml',
+            'pos_custom_ui/static/src/app/components/product_card/product_card.scss',
         ],
         'pos_self_order.assets': [
             'pos_custom_ui/static/src/app/pages/product_list_page/product_list_page.js',
