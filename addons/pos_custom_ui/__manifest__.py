@@ -7,6 +7,13 @@
     'data': [],
     'assets': {
         'point_of_sale._assets_pos': [
+            'pos_custom_ui/static/src/app/services/pos_store.js',
+            'pos_custom_ui/static/src/app/components/category_selector/category_selector.js',
+            'pos_custom_ui/static/src/app/components/category_selector/category_selector.scss',
+            'pos_custom_ui/static/src/app/screens/product_screen/order_summary/order_summary.js',
+            'pos_custom_ui/static/src/app/screens/product_screen/product_screen.js',
+            'pos_custom_ui/static/src/app/screens/product_screen/product_screen.xml',
+            'pos_custom_ui/static/src/app/screens/product_screen/product_screen.scss',
             'pos_custom_ui/static/src/app/components/orderline/orderline.xml',
             'pos_custom_ui/static/src/app/components/product_card/product_card.xml',
         ],
