@@ -6,6 +6,10 @@
     'depends': ['point_of_sale', 'pos_self_order', 'product'],
     'data': [],
     'assets': {
+        'point_of_sale._assets_pos': [
+            'pos_custom_ui/static/src/app/components/orderline/orderline.xml',
+            'pos_custom_ui/static/src/app/components/product_card/product_card.xml',
+        ],
         'pos_self_order.assets': [
             'pos_custom_ui/static/src/app/pages/product_list_page/product_list_page.js',
             'pos_custom_ui/static/src/app/pages/product_list_page/product_list_page.xml',
