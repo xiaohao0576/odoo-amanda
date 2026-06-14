@@ -59,6 +59,15 @@ patch(PosStore.prototype, {
         }
 
         let products = this.getCurrentOrderProductsForVirtualCategory();
+        if (!products.length) {
+            // Avoid getting stuck on the virtual category when opening a new empty order.
+            this._posCustomCurrentOrderCategorySelected = false;
+            this.posCustomSelectedProductTemplateId = null;
+            return originalProductToDisplayByCategGetter
+                ? originalProductToDisplayByCategGetter.call(this)
+                : [];
+        }
+
         const searchWord = this.searchProductWord.trim();
         if (searchWord) {
             products = this.getProductsBySearchWord(searchWord, products);
