@@ -1,6 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@100..900&display=swap");
 
 .o_custom_product_list_page {
+  .o_custom_table_number_bar {
+    background: #ffffff;
+  }
+
+  .o_custom_table_number_text {
+    color: #1f8b4c;
+    text-align: left;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.3;
+  }
+
   .category_btn .text-nowrap.fw-medium,
   .child_category_btn .text-nowrap,
   .child_category_all {

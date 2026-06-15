@@ -4,6 +4,13 @@
         <div class="o_self_product_list_page o_custom_product_list_page d-flex flex-column vh-100 overflow-hidden o_self_background o_self_fade"
              t-attf-style="background-image:#{this.selfOrder.kioskBackgroundImageUrl};background-size: cover; background-position: center; background-repeat: no-repeat;">
             <t t-set="has_sub_categories" t-value="this.state.subCategories?.length > 0"/>
+            <div class="o_custom_table_number_bar">
+                <div class="container o_self_container px-kiosk-p-0">
+                    <div class="o_custom_table_number_text px-kiosk-p-4 py-2">
+                        Table Number: <t t-out="this.selfOrder.currentTable?.table_number || '-'"/>
+                    </div>
+                </div>
+            </div>
             <div class="bg-view border-bottom user-select-none" t-att-class="{'o_self_shadow_top': !has_sub_categories and this.scrollShadow.top }">
                 <div class="container o_self_container px-kiosk-p-0">
                     <div class="category_container d-flex" t-custom-ref="category_container">
