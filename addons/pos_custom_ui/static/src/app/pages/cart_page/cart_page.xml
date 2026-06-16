@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_custom_ui.CartPage" t-inherit="pos_self_order.CartPage" t-inherit-mode="extension">
+        <xpath expr="//h1[contains(@class, 'ms-3') and contains(@class, 'ms-sm-0')]" position="before">
+            <h1 class="ms-3 ms-sm-0 mb-3 text-danger fw-bold">
+                Table Number: <t t-out="this.getPosCustomTableNumber()"/>
+            </h1>
+        </xpath>
+        <xpath expr="//t[@t-out='product.name']" position="attributes">
+            <attribute name="t-out">product.display_name</attribute>
+        </xpath>
+    </t>
+</templates>

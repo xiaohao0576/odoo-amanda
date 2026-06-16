@@ -27,6 +27,7 @@
             'pos_custom_ui/static/src/app/components/waiter_call_popup/waiter_call_popup.xml',
             'pos_custom_ui/static/src/app/components/waiter_call_popup/waiter_call_popup.scss',
             'pos_custom_ui/static/src/app/pages/cart_page/cart_page.js',
+            'pos_custom_ui/static/src/app/pages/cart_page/cart_page.xml',
         ],
     },
     'installable': True,
