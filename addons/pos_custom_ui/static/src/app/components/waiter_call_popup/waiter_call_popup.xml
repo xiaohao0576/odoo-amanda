@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_custom_ui.WaiterCallPopup">
+        <div class="o_waiter_call_popup o_dialog">
+            <div role="dialog" class="modal d-block" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="o_waiter_call_image_wrap">
+                                <img
+                                    src="/pos_custom_ui/static/img/call-waiter.webp"
+                                    alt="Call waiter"
+                                    class="o_waiter_call_image"
+                                />
+                            </div>
+                            <div class="o_waiter_call_text_wrap">
+                                <p class="o_waiter_call_line">请呼叫餐厅服务员为您下单。</p>
+                                <p class="o_waiter_call_line">Please call a restaurant waiter to place your order.</p>
+                                <p class="o_waiter_call_line">សូមហៅបុគ្គលិកភោជនីយដ្ឋានមកជួយធ្វើការកុម្ម៉ង់ម្ហូប។</p>
+                            </div>
+                            <div class="o_waiter_call_actions">
+                                <button
+                                    type="button"
+                                    class="btn btn-primary btn-lg"
+                                    t-on-click="() => this.props.close()"
+                                >
+                                    <i class="fa fa-bell me-2" aria-hidden="true"/>
+                                    <t t-out="this.props.closeLabel"/>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

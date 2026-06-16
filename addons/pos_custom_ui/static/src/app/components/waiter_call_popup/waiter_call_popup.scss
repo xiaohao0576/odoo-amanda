@@ -1,0 +1,52 @@
+.o_waiter_call_popup {
+    .modal-dialog {
+        width: 100vw;
+        max-width: 520px;
+        margin: 0 auto;
+    }
+
+    .modal-content {
+        border-radius: 0;
+        overflow: hidden;
+    }
+
+    .modal-body {
+        padding: 0;
+        background: #ffffff;
+    }
+
+    .o_waiter_call_image_wrap {
+        width: 100%;
+    }
+
+    .o_waiter_call_image {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .o_waiter_call_text_wrap {
+        padding: 16px 16px 8px;
+    }
+
+    .o_waiter_call_line {
+        margin: 0 0 8px;
+        font-size: 16px;
+        line-height: 1.45;
+        color: #212529;
+    }
+
+    .o_waiter_call_line:last-child {
+        margin-bottom: 0;
+    }
+
+    .o_waiter_call_actions {
+        padding: 12px 16px 16px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .o_waiter_call_actions .btn {
+        min-width: 180px;
+    }
+}
