@@ -72,7 +72,7 @@ patch(PosStore.prototype, {
         if (searchWord) {
             products = this.getProductsBySearchWord(searchWord, products);
         }
-        products = this.orderProductBySequenceAndFav(products);
+        // Keep products in orderline order (no sequence/fav sort for this virtual category).
 
         return products.length ? [[POS_CUSTOM_CURRENT_ORDER_CATEGORY_ID, products]] : [];
     },
