@@ -1,5 +1,7 @@
 import { patch } from "@web/core/utils/patch";
 import { PosStore } from "@point_of_sale/app/services/pos_store";
+import { _t } from "@web/core/l10n/translation";
+import { isSamePosDevice } from "@point_of_sale/app/utils/devices_synchronisation";
 
 export const POS_CUSTOM_CURRENT_ORDER_CATEGORY_ID = "__pos_custom_current_order__";
 export const POS_CUSTOM_ORDERLINE_FOCUS_EVENT = "pos-custom:orderline-focus-product-card";
@@ -11,8 +13,45 @@ const originalProductToDisplayByCategGetter = Object.getOwnPropertyDescriptor(
 )?.get;
 
 patch(PosStore.prototype, {
+    async setup() {
+        await super.setup(...arguments);
+        this.data.connectWebSocket("SYNCHRONISATION", (payload) =>
+            this.onPosCustomSelfOrderSynchronisation(payload)
+        );
+    },
+
     get isPosCustomCurrentOrderCategorySelected() {
         return this._posCustomCurrentOrderCategorySelected === true;
+    },
+
+    onPosCustomSelfOrderSynchronisation(payload) {
+        const draftSelfOrders = payload?.static_records?.["pos.selforder"]?.filter(
+            (record) => record.state === "draft"
+        );
+        if (!draftSelfOrders?.length) {
+            return;
+        }
+
+        if (isSamePosDevice(payload.session_id, payload.device_identifier, this)) {
+            return;
+        }
+
+        for (const record of draftSelfOrders) {
+            const table =
+                typeof record.table_id === "number"
+                    ? this.models["restaurant.table"]?.get(record.table_id)
+                    : null;
+            const tableNumber = table?.table_number || null;
+            const message = tableNumber
+                ? _t("Table %s has a new self-order.", tableNumber)
+                : _t("A new self-order has been received.");
+            this.notification.add(message, {
+                title: _t("Self Order"),
+                type: "warning",
+                sticky: false,
+                autocloseDelay: 10000,
+            });
+        }
     },
 
     setSelectedCategory(categoryId) {
