@@ -21,3 +21,33 @@
     white-space: pre-wrap;
     word-break: break-all;
 }
+
+.pos-custom-selforder-panel-actions {
+    background: #f8f9fb;
+    box-shadow: 0 -4px 12px rgba(15, 23, 42, 0.06);
+}
+
+.pos-custom-selforder-panel-actions .btn {
+    min-height: 44px;
+}
+
+.pos-custom-selforder-panel-actions .btn-link {
+    font-weight: 600;
+}
+
+.pos-custom-selforder-panel-actions .btn-link:hover {
+    background: rgba(220, 53, 69, 0.08);
+    border-radius: 0.5rem;
+}
+
+.pos-custom-selforder-accept-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.pos-custom-selforder-accept-meta {
+    opacity: 0.92;
+    font-weight: 500;
+}

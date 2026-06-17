@@ -8,7 +8,7 @@
             </div>
 
             <div class="flex-grow-1 overflow-y-auto p-2">
-                <div class="mb-2">
+                <div class="mb-2" t-if="currentNote">
                     <strong>Customer note:</strong>
                     <div class="small text-muted"><t t-out="currentNote"/></div>
                 </div>
@@ -47,9 +47,15 @@
                 </t>
             </div>
 
-            <div class="pos-custom-selforder-panel-actions d-flex gap-2 p-2 border-top">
-                <button class="btn btn-outline-danger flex-grow-1" t-on-click="deleteOrder">Delete</button>
-                <button class="btn btn-primary flex-grow-1" t-att-disabled="!hasEditableLines" t-on-click="accept">Accept</button>
+            <div class="pos-custom-selforder-panel-actions d-flex align-items-center gap-2 p-2 border-top">
+                <button class="btn btn-link text-danger text-decoration-none px-2" t-on-click="deleteOrder">
+                    <i class="fa fa-trash me-1" role="img" aria-label="Delete"/>
+                    <span>Delete</span>
+                </button>
+                <button class="btn btn-primary flex-grow-1 pos-custom-selforder-accept-btn" t-att-disabled="!hasEditableLines" t-on-click="accept">
+                    <span>Accept</span>
+                    <small class="ms-2 pos-custom-selforder-accept-meta" t-out="`${actionableItemsCount} items`"/>
+                </button>
             </div>
         </div>
     </t>

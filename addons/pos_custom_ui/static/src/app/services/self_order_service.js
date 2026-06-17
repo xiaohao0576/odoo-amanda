@@ -23,6 +23,12 @@ patch(SelfOrder.prototype, {
             return;
         }
 
+        // Terminal states must clear transient dialogs (e.g., waiter call popup)
+        // before route changes to avoid stale overlays on landing page.
+        if (this.dialog?.closeAll) {
+            this.dialog.closeAll();
+        }
+
         if (currentOrder) {
             this.data.localDeleteCascade(currentOrder);
         }

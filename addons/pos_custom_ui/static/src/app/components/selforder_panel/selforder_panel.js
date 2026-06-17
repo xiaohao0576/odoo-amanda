@@ -91,6 +91,13 @@ export class SelfOrderPanel extends Component {
         return !this.state.parseError && this.state.lines.length > 0;
     }
 
+    get actionableItemsCount() {
+        if (this.state.parseError) {
+            return 0;
+        }
+        return this.state.lines.reduce((count, line) => count + Math.max(0, Number(line.qty || 0)), 0);
+    }
+
     get currentNote() {
         return this.props.selfOrder.general_customer_note || "-";
     }
