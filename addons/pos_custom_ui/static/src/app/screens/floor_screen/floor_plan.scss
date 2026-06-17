@@ -1,0 +1,83 @@
+.pos-custom-selforder-bell {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    margin: 0.2rem;
+    min-width: 2rem;
+    height: 2rem;
+    padding: 0.2rem 0.45rem;
+    border-radius: 999px;
+    background: #d90429;
+    color: #fff3b0;
+    border: 2px solid #ffd166;
+    box-shadow: 0 0 0.35rem rgba(217, 4, 41, 0.9), 0 0 0.9rem rgba(255, 209, 102, 0.7);
+    animation: pos-custom-selforder-bell-attention 1s ease-in-out infinite;
+}
+
+.pos-custom-selforder-bell::after {
+    content: "";
+    position: absolute;
+    inset: -0.25rem;
+    border-radius: 999px;
+    border: 2px solid rgba(255, 209, 102, 0.9);
+    animation: pos-custom-selforder-bell-ping 1.2s ease-out infinite;
+    pointer-events: none;
+}
+
+.pos-custom-selforder-bell .fa-bell {
+    font-size: 0.9rem;
+    transform-origin: 50% 0%;
+    animation: pos-custom-selforder-bell-shake 0.9s ease-in-out infinite;
+}
+
+.pos-custom-selforder-bell-count {
+    min-width: 1.05rem;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+@keyframes pos-custom-selforder-bell-attention {
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.95;
+        transform: scale(1.11);
+    }
+}
+
+@keyframes pos-custom-selforder-bell-ping {
+    0% {
+        opacity: 0.95;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.28);
+    }
+}
+
+@keyframes pos-custom-selforder-bell-shake {
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+    20% {
+        transform: rotate(14deg);
+    }
+    40% {
+        transform: rotate(-12deg);
+    }
+    60% {
+        transform: rotate(10deg);
+    }
+    80% {
+        transform: rotate(-8deg);
+    }
+}

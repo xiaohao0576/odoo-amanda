@@ -1,6 +1,13 @@
 import { patch } from "@web/core/utils/patch";
 import { ProductScreen } from "@point_of_sale/app/screens/product_screen/product_screen";
 import { debounce } from "@web/core/utils/timing";
+import { _t } from "@web/core/l10n/translation";
+import { SelfOrderPanel } from "@pos_custom_ui/app/components/selforder_panel/selforder_panel";
+
+ProductScreen.components = {
+    ...ProductScreen.components,
+    SelfOrderPanel,
+};
 
 const PRODUCT_INFO_LONG_PRESS_DURATION = 5000;
 const TOUCH_MOVE_CANCEL_THRESHOLD = 12;
@@ -93,5 +100,63 @@ patch(ProductScreen.prototype, {
                 ? focusClass
                 : "";
         return `${this.pos.productViewMode} ${highlightClass}`.trim();
+    },
+
+    getPosCustomPendingSelfOrder() {
+        return this.pos.getNextSelfOrderForSelectedTable();
+    },
+
+    getPosCustomTableNumber() {
+        return this.pos.selectedTable?.table_number || "-";
+    },
+
+    async onPosCustomAcceptSelfOrder(lines, selfOrder) {
+        const order = this.pos.getOrder();
+        if (!order) {
+            return;
+        }
+
+        for (const line of lines) {
+            const product = line.product || this.pos.models["product.product"].get(line.productId);
+            const productTemplateId = product?.product_tmpl_id?.id || product?.product_tmpl_id;
+            const productTemplate =
+                typeof productTemplateId === "number"
+                    ? this.pos.models["product.template"].get(productTemplateId)
+                    : product?.product_tmpl_id;
+            if (!productTemplate || line.qty <= 0) {
+                continue;
+            }
+            const priceUnit =
+                typeof line.priceUnit === "number" && !isNaN(line.priceUnit)
+                    ? line.priceUnit
+                    : product.getPrice(order.pricelist_id, line.qty, 0, false, product);
+            await this.pos.addLineToCurrentOrder(
+                {
+                    product_tmpl_id: productTemplate,
+                    qty: line.qty,
+                    price_unit: priceUnit,
+                },
+                {},
+                false
+            );
+        }
+
+        try {
+            await this.pos.markSelfOrderDone(selfOrder.id);
+        } catch (error) {
+            this.notification.add(error?.message || _t("Failed to mark self order as done."), {
+                type: "danger",
+            });
+        }
+    },
+
+    async onPosCustomDeleteSelfOrder(selfOrder) {
+        try {
+            await this.pos.markSelfOrderCancelled(selfOrder.id);
+        } catch (error) {
+            this.notification.add(error?.message || _t("Failed to cancel self order."), {
+                type: "danger",
+            });
+        }
     },
 });

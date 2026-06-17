@@ -7,5 +7,14 @@
             <attribute name="t-on-pointerleave">longPressHandlers.onPointerLeave</attribute>
             <attribute name="t-on-pointermove">longPressHandlers.onPointerMove</attribute>
         </xpath>
+        <xpath expr="//div[contains(@class, 'rightpane')]" position="inside">
+            <SelfOrderPanel
+                t-if="this.getPosCustomPendingSelfOrder()"
+                selfOrder="this.getPosCustomPendingSelfOrder()"
+                tableNumber="this.getPosCustomTableNumber()"
+                onAccept.bind="this.onPosCustomAcceptSelfOrder"
+                onDelete.bind="this.onPosCustomDeleteSelfOrder"
+            />
+        </xpath>
     </t>
 </templates>

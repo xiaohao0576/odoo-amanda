@@ -1,0 +1,23 @@
+.pos-custom-selforder-panel {
+    width: 100%;
+    max-width: 380px;
+    min-width: 280px;
+}
+
+.pos-custom-selforder-line-image {
+    width: 46px;
+    height: 46px;
+    object-fit: cover;
+}
+
+.pos-custom-selforder-qty {
+    width: 2rem;
+}
+
+.pos-custom-selforder-raw {
+    max-height: 180px;
+    overflow: auto;
+    font-size: 0.72rem;
+    white-space: pre-wrap;
+    word-break: break-all;
+}

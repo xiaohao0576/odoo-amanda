@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="ir_cron_pos_custom_ui_mark_stale_selforders" model="ir.cron">
+        <field name="name">POS SelfOrder Mark Stale</field>
+        <field name="model_id" ref="model_pos_selforder"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_mark_stale_drafts()</field>
+        <field name="interval_number">5</field>
+        <field name="interval_type">minutes</field>
+        <field name="active">False</field>
+    </record>
+</odoo>

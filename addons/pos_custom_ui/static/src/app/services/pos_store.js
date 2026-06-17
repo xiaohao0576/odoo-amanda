@@ -76,4 +76,48 @@ patch(PosStore.prototype, {
 
         return products.length ? [[POS_CUSTOM_CURRENT_ORDER_CATEGORY_ID, products]] : [];
     },
+
+    _posCustomSelfOrderSort(a, b) {
+        const aDate = a.create_date ? +new Date(a.create_date) : 0;
+        const bDate = b.create_date ? +new Date(b.create_date) : 0;
+        if (aDate !== bDate) {
+            return aDate - bDate;
+        }
+        return (a.id || 0) - (b.id || 0);
+    },
+
+    getSelfOrdersByTable(tableId) {
+        if (!tableId || !this.models["pos.selforder"]) {
+            return [];
+        }
+        return this.models["pos.selforder"]
+            .filter((order) => order.state === "draft" && order.table_id?.id === tableId)
+            .sort((a, b) => this._posCustomSelfOrderSort(a, b));
+    },
+
+    getSelfOrderDraftCount(tableId) {
+        return this.getSelfOrdersByTable(tableId).length;
+    },
+
+    getNextSelfOrderForSelectedTable() {
+        const tableId = this.selectedTable?.id;
+        if (!tableId) {
+            return null;
+        }
+        return this.getSelfOrdersByTable(tableId)[0] || null;
+    },
+
+    async markSelfOrderDone(selfOrderId) {
+        if (!selfOrderId) {
+            return false;
+        }
+        return await this.data.call("pos.selforder", "action_mark_done", [[selfOrderId]]);
+    },
+
+    async markSelfOrderCancelled(selfOrderId) {
+        if (!selfOrderId) {
+            return false;
+        }
+        return await this.data.call("pos.selforder", "action_mark_cancel", [[selfOrderId]]);
+    },
 });

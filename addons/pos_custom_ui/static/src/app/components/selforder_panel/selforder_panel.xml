@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_custom_ui.SelfOrderPanel">
+        <div class="pos-custom-selforder-panel position-absolute top-0 end-0 h-100 z-3 d-flex flex-column bg-white border-start shadow">
+            <div class="pos-custom-selforder-panel-header p-2 border-bottom">
+                <h5 class="mb-1">Self Order - Table <t t-out="props.tableNumber"/></h5>
+                <small class="text-muted">UUID: <t t-out="props.selfOrder.uuid"/></small>
+            </div>
+
+            <div class="flex-grow-1 overflow-y-auto p-2">
+                <div class="mb-2">
+                    <strong>Customer note:</strong>
+                    <div class="small text-muted"><t t-out="currentNote"/></div>
+                </div>
+
+                <t t-if="state.parseError">
+                    <div class="alert alert-warning">
+                        <div class="fw-bold">无法解析，查看原始数据</div>
+                        <pre class="pos-custom-selforder-raw mb-0"><t t-out="state.rawOrderLines"/></pre>
+                    </div>
+                </t>
+
+                <t t-elif="!state.lines.length">
+                    <div class="alert alert-secondary mb-0">No order lines found.</div>
+                </t>
+
+                <t t-else="">
+                    <div t-foreach="state.lines" t-as="line" t-key="line.key" class="pos-custom-selforder-line d-flex align-items-center gap-2 p-2 mb-2 rounded border">
+                        <img t-if="getImageUrl(line)" t-att-src="getImageUrl(line)" class="pos-custom-selforder-line-image rounded"/>
+                        <div class="flex-grow-1">
+                            <div class="fw-semibold" t-out="line.name"/>
+                            <small t-if="showProductDebugId" class="text-muted">ID <t t-out="line.productId || '-'"/></small>
+                        </div>
+                        <div class="d-flex align-items-center gap-1">
+                            <button
+                                class="btn btn-sm"
+                                t-att-class="this.isLastUnit(line) ? 'btn-outline-danger' : 'btn-outline-secondary'"
+                                t-on-click="() => this.decrease(line)"
+                            >
+                                <i t-if="this.isLastUnit(line)" class="fa fa-trash" role="img" aria-label="Delete line"/>
+                                <t t-else="">-</t>
+                            </button>
+                            <span class="pos-custom-selforder-qty text-center" t-out="line.qty"/>
+                            <button class="btn btn-sm btn-outline-secondary" t-on-click="() => this.increase(line)">+</button>
+                        </div>
+                    </div>
+                </t>
+            </div>
+
+            <div class="pos-custom-selforder-panel-actions d-flex gap-2 p-2 border-top">
+                <button class="btn btn-outline-danger flex-grow-1" t-on-click="deleteOrder">Delete</button>
+                <button class="btn btn-primary flex-grow-1" t-att-disabled="!hasEditableLines" t-on-click="accept">Accept</button>
+            </div>
+        </div>
+    </t>
+</templates>

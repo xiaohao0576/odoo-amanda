@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_pos_selforder_tree" model="ir.ui.view">
+        <field name="name">pos.selforder.list</field>
+        <field name="model">pos.selforder</field>
+        <field name="arch" type="xml">
+            <list string="Self Orders" create="0" delete="0" duplicate="0" decoration-info="state == 'draft'" decoration-muted="state == 'cancel'" decoration-success="state == 'done'">
+                <field name="uuid"/>
+                <field name="state" widget="badge"/>
+                <field name="table_id"/>
+                <field name="session_id"/>
+                <field name="config_id"/>
+                <field name="company_id" optional="hide"/>
+                <field name="general_customer_note" optional="hide"/>
+                <field name="processed_at" optional="show"/>
+                <field name="processed_by" optional="show"/>
+                <field name="create_date"/>
+                <field name="write_date" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_pos_selforder_form" model="ir.ui.view">
+        <field name="name">pos.selforder.form</field>
+        <field name="model">pos.selforder</field>
+        <field name="arch" type="xml">
+            <form string="Self Order" create="0" delete="0" duplicate="0">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="uuid" readonly="1"/>
+                            <field name="state" readonly="1"/>
+                            <field name="table_id" readonly="1"/>
+                            <field name="session_id" readonly="1"/>
+                            <field name="config_id" readonly="1"/>
+                            <field name="company_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="processed_at" readonly="1"/>
+                            <field name="processed_by" readonly="1"/>
+                            <field name="create_date" readonly="1"/>
+                            <field name="write_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="general_customer_note" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="order_lines" widget="text" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_pos_selforder_search" model="ir.ui.view">
+        <field name="name">pos.selforder.search</field>
+        <field name="model">pos.selforder</field>
+        <field name="arch" type="xml">
+            <search string="Self Orders">
+                <field name="uuid"/>
+                <field name="table_id"/>
+                <field name="config_id"/>
+                <field name="company_id"/>
+                <field name="session_id"/>
+                <field name="processed_by"/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_done" string="Done" domain="[('state', '=', 'done')]"/>
+                <filter name="filter_cancel" string="Cancelled" domain="[('state', '=', 'cancel')]"/>
+                <filter name="filter_stale" string="Stale" domain="[('state', '=', 'stale')]"/>
+                <separator/>
+                <filter name="group_by_state" string="State" context="{'group_by': 'state'}"/>
+                <filter name="group_by_table" string="Table" context="{'group_by': 'table_id'}"/>
+                <filter name="group_by_config" string="POS" context="{'group_by': 'config_id'}"/>
+                <filter name="group_by_company" string="Company" context="{'group_by': 'company_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_pos_selforder" model="ir.actions.act_window">
+        <field name="name">Self Orders</field>
+        <field name="res_model">pos.selforder</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_pos_selforder_search"/>
+        <field name="context">{'search_default_filter_draft': 1}</field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">No self orders found</p>
+            <p>Submitted mobile self orders will appear here.</p>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_pos_selforder"
+        name="Self Orders"
+        parent="point_of_sale.menu_point_of_sale"
+        action="action_pos_selforder"
+        sequence="25"
+        groups="point_of_sale.group_pos_user,point_of_sale.group_pos_manager"
+    />
+</odoo>

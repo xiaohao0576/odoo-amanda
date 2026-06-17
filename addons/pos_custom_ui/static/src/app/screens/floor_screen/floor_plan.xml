@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_custom_ui.floor_screen_element" t-inherit="pos_restaurant.floor_screen_element" t-inherit-mode="extension">
+        <xpath expr="//t[@t-if='element.isTable']//div[contains(@t-attf-class, 'floor-table')]" position="inside">
+            <div
+                t-if="this.pos.getSelfOrderDraftCount(element.id) &gt; 0"
+                class="pos-custom-selforder-bell position-absolute start-0 top-0 z-3"
+                title="Pending self orders"
+            >
+                <i class="fa fa-bell" role="img" aria-label="Pending self orders"/>
+                <span class="pos-custom-selforder-bell-count" t-out="this.pos.getSelfOrderDraftCount(element.id)"/>
+            </div>
+        </xpath>
+    </t>
+</templates>
