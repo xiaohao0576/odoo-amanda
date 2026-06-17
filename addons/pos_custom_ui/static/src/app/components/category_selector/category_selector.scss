@@ -3,3 +3,9 @@
     border-color: #ff8a00 !important;
     color: #fff !important;
 }
+
+/* In POS template, unselected top-level categories receive border-0.
+   Use that to give Current Order a clear active-state frame only when selected. */
+.o_colorlist_item_color_custom_current_order:not(.border-0) {
+    border: 2px solid #1f2937 !important;
+}

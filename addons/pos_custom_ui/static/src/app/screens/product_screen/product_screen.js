@@ -3,6 +3,7 @@ import { ProductScreen } from "@point_of_sale/app/screens/product_screen/product
 import { debounce } from "@web/core/utils/timing";
 import { _t } from "@web/core/l10n/translation";
 import { SelfOrderPanel } from "@pos_custom_ui/app/components/selforder_panel/selforder_panel";
+import { POS_CUSTOM_CURRENT_ORDER_CATEGORY_ID } from "@pos_custom_ui/app/services/pos_store";
 
 ProductScreen.components = {
     ...ProductScreen.components,
@@ -74,10 +75,18 @@ function createProductInfoLongPressHandlers(callback, delay = PRODUCT_INFO_LONG_
 patch(ProductScreen.prototype, {
     setup() {
         super.setup?.();
+        this.applyPosCustomPreferredCategoryOnEnter();
         this.longPressHandlers = createProductInfoLongPressHandlers((product) =>
             this.pos.onProductInfoClick(product)
         );
         this.onScroll = debounce(this.longPressHandlers.onScroll, 200, { leading: true });
+    },
+
+    applyPosCustomPreferredCategoryOnEnter() {
+        const currentOrderProducts = this.pos.getCurrentOrderProductsForVirtualCategory?.() || [];
+        if (currentOrderProducts.length > 0) {
+            this.pos.setSelectedCategory(POS_CUSTOM_CURRENT_ORDER_CATEGORY_ID);
+        }
     },
 
     onPointerDown(event, product) {
