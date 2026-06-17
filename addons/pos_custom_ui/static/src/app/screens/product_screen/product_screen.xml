@@ -3,6 +3,7 @@
     <t t-name="pos_custom_ui.ProductScreen" t-inherit="point_of_sale.ProductScreen" t-inherit-mode="extension">
         <xpath expr="//ProductCard[@productId='product.id']" position="attributes">
             <attribute name="class">this.getPosCustomProductCardClass(product)</attribute>
+            <attribute name="onClick.bind">() => this.onPosCustomProductCardClick(product)</attribute>
             <attribute name="t-on-pointercancel">longPressHandlers.onPointerCancel</attribute>
             <attribute name="t-on-pointerleave">longPressHandlers.onPointerLeave</attribute>
             <attribute name="t-on-pointermove">longPressHandlers.onPointerMove</attribute>

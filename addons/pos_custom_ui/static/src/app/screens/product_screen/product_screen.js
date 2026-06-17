@@ -89,6 +89,37 @@ patch(ProductScreen.prototype, {
         }
     },
 
+    getPosCustomFirstMatchingOrderline(product) {
+        const order = this.pos.getOrder();
+        if (!order) {
+            return null;
+        }
+        return (
+            order.lines.find(
+                (line) => !line.combo_parent_id && line.product_id?.product_tmpl_id?.id === product.id
+            ) || null
+        );
+    },
+
+    async onPosCustomProductCardClick(product) {
+        if (!this.pos.isPosCustomCurrentOrderCategorySelected) {
+            return this.addProductToOrder(product);
+        }
+
+        const order = this.pos.getOrder();
+        if (!order) {
+            return;
+        }
+
+        const matchingLine = this.getPosCustomFirstMatchingOrderline(product);
+        if (!matchingLine) {
+            return;
+        }
+
+        this.pos.selectOrderLine(order, matchingLine);
+        this.pos.posCustomSelectedProductTemplateId = product.id;
+    },
+
     onPointerDown(event, product) {
         if (isNaN(Number(product.id))) {
             return;
