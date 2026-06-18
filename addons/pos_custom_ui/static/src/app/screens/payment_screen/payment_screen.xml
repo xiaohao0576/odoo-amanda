@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_custom_ui.PaymentScreenDue" t-inherit="point_of_sale.PaymentScreenDue" t-inherit-mode="extension">
+        <xpath expr="//div[contains(@class, 'total')]" position="after">
+            <div class="pos-custom-khr-due d-flex flex-column align-items-center mt-2">
+                <div class="pos-custom-khr-rate text-muted" t-out="this.getPosCustomKhrRateLabel()"/>
+                <div class="pos-custom-khr-amount" t-out="this.getPosCustomDueKhrLabel()"/>
+            </div>
+        </xpath>
+    </t>
+</templates>

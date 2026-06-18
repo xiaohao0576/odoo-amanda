@@ -1,0 +1,24 @@
+.pos-custom-khr-due {
+    line-height: 1.2;
+}
+
+.pos-custom-khr-rate {
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+}
+
+.pos-custom-khr-amount {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1f5f4a;
+}
+
+@media (max-width: 768px) {
+    .pos-custom-khr-rate {
+        font-size: 0.82rem;
+    }
+
+    .pos-custom-khr-amount {
+        font-size: 1.25rem;
+    }
+}
