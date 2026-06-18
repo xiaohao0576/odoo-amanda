@@ -5,15 +5,16 @@
             <xpath expr="//tr[td[@name='subtotal']]" position="before">
                 <tr class="khr-exchange-rate-line">
                     <td class="text-start w-70 text-small">Exchange Rate</td>
-                    <td class="text-end w-30 text-small font-monospace">1 USD = 4000 KHR</td>
+                    <td class="text-end w-30 text-small font-monospace" t-out="extra_data.get('khr_exchange_rate_label', '1 USD = 4000 KHR')"/>
                 </tr>
             </xpath>
 
             <xpath expr="//tr[td[@name='total']]" position="after">
-                <t t-set="khr_total_amount" t-value="int(round((order.get('amount_total', 0.0) * 4000.0) / 100.0) * 100)"/>
                 <tr class="text-bold khr-total-line">
                     <td class="text-start w-70 ps-2 text-small">Total (KHR)</td>
-                    <td class="text-end w-30 font-monospace" t-out="'%s KHR' % khr_total_amount"/>
+                    <td class="text-end w-30 font-monospace">
+                        <t t-out="extra_data.get('khr_total_amount', 0)"/> <t t-out="extra_data.get('khr_currency_label', 'KHR')"/>
+                    </td>
                 </tr>
             </xpath>
         </template>

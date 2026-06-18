@@ -13,6 +13,7 @@
     'assets': {
         'point_of_sale._assets_pos': [
             'pos_custom_ui/static/src/app/services/pos_store.js',
+            'pos_custom_ui/static/src/app/utils/printer/generate_printer_data.js',
             'pos_custom_ui/static/src/app/components/category_selector/category_selector.js',
             'pos_custom_ui/static/src/app/components/category_selector/category_selector.scss',
             'pos_custom_ui/static/src/app/components/selforder_panel/selforder_panel.js',
