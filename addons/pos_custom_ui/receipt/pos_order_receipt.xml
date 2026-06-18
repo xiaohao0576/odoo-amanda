@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="pos_custom_ui.pos_order_receipt" inherit_id="point_of_sale.pos_order_receipt">
+            <xpath expr="//tr[td[@name='subtotal']]" position="before">
+                <tr class="khr-exchange-rate-line">
+                    <td class="text-start w-70 text-small">Exchange Rate</td>
+                    <td class="text-end w-30 text-small font-monospace">1 USD = 4000 KHR</td>
+                </tr>
+            </xpath>
+
+            <xpath expr="//tr[td[@name='total']]" position="after">
+                <t t-set="khr_total_amount" t-value="int(round((order.get('amount_total', 0.0) * 4000.0) / 100.0) * 100)"/>
+                <tr class="text-bold khr-total-line">
+                    <td class="text-start w-70 ps-2 text-small">Total (KHR)</td>
+                    <td class="text-end w-30 font-monospace" t-out="'%s KHR' % khr_total_amount"/>
+                </tr>
+            </xpath>
+        </template>
+    </data>
+</odoo>

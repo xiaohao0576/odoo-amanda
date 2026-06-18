@@ -7,6 +7,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/pos_selforder_views.xml',
+        'receipt/pos_order_receipt.xml',
         'data/ir_cron_data.xml',
     ],
     'assets': {
