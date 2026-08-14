@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABA PayWay for Odoo eCommerce — Description</title>
+    <!-- No external libraries and no JavaScript: relies only on the Bootstrap (v5) CSS that Odoo 18 already bundles. -->
+    <!-- Spacing uses margin (not flex `gap`) because Odoo's HTML sanitizer strips gap/row-gap/column-gap. -->
+    <!-- Image height comes from width/height attributes + height:auto, not CSS aspect-ratio, so images still
+         reserve space and render if the sanitizer drops aspect-ratio. -->
+    <!-- PREVIEW ONLY — remove before pasting into Odoo (Odoo provides its own Bootstrap). -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+</head>
+
+<body>
+    <!-- Bootstrap (Odoo-provided, v5) utility classes and inline visual styles. -->
+    <div class="container-fluid mx-auto px-2 px-sm-4 py-3 py-sm-4 mt-4 bg-100"
+        style="max-width:1288px;font-family:'Inter','Odoo Unicode Support Noto',sans-serif;-webkit-font-smoothing:antialiased;background:#fafafa !important;border-radius:16px;">
+        <div class="w-full px-3 px-sm-4 py-4">
+
+            <h3 class="d-none d-sm-block text-center"
+                style="font-family:'Inter','Odoo Unicode Support Noto',sans-serif;font-weight:700;font-size:32px;line-height:1.2;color:#4E4E4E;margin:8px 0 16px;overflow-wrap:break-word;">
+                Introducing ABA PayWay for Odoo eCommerce</h3>
+            <h3 class="d-block d-sm-none text-center"
+                style="font-family:'Inter','Odoo Unicode Support Noto',sans-serif;font-weight:700;font-size:24px;line-height:1.2;color:#4E4E4E;margin:8px 0 16px;overflow-wrap:break-word;">
+                Introducing ABA PayWay for Odoo eCommerce</h3>
+
+            <p class="d-none d-sm-block text-center mx-auto mb-0"
+                style="font-size:22px;line-height:1.3;color:#4E4E4E;max-width:792px;overflow-wrap:break-word;">Accept
+                payments on Odoo eCommerce with ABA KHQR, Card, WeChat Pay, Alipay and get paid straight to your ABA
+                Bank account.</p>
+            <p class="d-block d-sm-none text-center mx-auto mb-0"
+                style="font-size:16px;line-height:1.4;color:#4E4E4E;max-width:792px;overflow-wrap:break-word;">Accept
+                payments on Odoo eCommerce with ABA KHQR, Card, WeChat Pay, Alipay and get paid straight to your ABA
+                Bank account.</p>
+
+            <h4 class="d-none d-sm-block text-center"
+                style="font-family:'Inter','Odoo Unicode Support Noto',sans-serif;font-weight:700;font-size:28px;line-height:1.2;color:#4E4E4E;margin:56px 0 40px;">
+                How does it work?</h4>
+            <h4 class="d-block d-sm-none text-center"
+                style="font-family:'Inter','Odoo Unicode Support Noto',sans-serif;font-weight:700;font-size:20px;line-height:1.2;color:#4E4E4E;margin:40px 0 24px;">
+                How does it work?</h4>
+
+            <!-- Desktop/tablet: static two-column layout beside the combined how-it-works.gif.
+                 No card is highlighted — the leading numbers carry the sequence on their own. -->
+            <div class="d-none d-lg-flex align-items-center">
+                <div class="d-flex flex-column" style="flex:1 1 0;min-width:0;">
+                    <div class="p-4" style="min-height:112px;box-sizing:border-box;">
+                        <h5 class="mb-2"
+                            style="font-family:'Inter','Odoo Unicode Support Noto',sans-serif;font-weight:600;font-size:20px;line-height:24px;color:#000;">
+                            1. Customer places an order</h5>
+                        <p class="mb-0" style="font-size:18px;line-height:24px;color:rgba(0,0,0,.5);">A customer adds
+                            items to their cart and proceeds to checkout on your Odoo eCommerce website.</p>
+                    </div>
+                    <div class="p-4" style="margin-top:12px;min-height:112px;box-sizing:border-box;">
+                        <h5 class="mb-2"
+                            style="font-family:'Inter','Odoo Unicode Support Noto',sans-serif;font-weight:600;font-size:20px;line-height:24px;color:#000;">
+                            2. Selects a payment method</h5>
+                        <p class="mb-0" style="font-size:18px;line-height:24px;color:rgba(0,0,0,.5);">Your customer pays
+                            securely with ABA KHQR, Card, WeChat Pay, or Alipay on your Odoo eCommerce website.</p>
+                    </div>
+                    <div class="p-4" style="margin-top:12px;min-height:112px;box-sizing:border-box;">
+                        <h5 class="mb-2"
+                            style="font-family:'Inter','Odoo Unicode Support Noto',sans-serif;font-weight:600;font-size:20px;line-height:24px;color:#000;">
+                            3. Order confirmed</h5>
+                        <p class="mb-0" style="font-size:18px;line-height:24px;color:rgba(0,0,0,.5);">After successful
+                            payment, funds settle straight into your ABA account and you can begin fulfilling the order.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex-shrink-0" style="width:50%;max-width:480px;margin-left:40px;">
+                    <img src="how-it-works.gif" alt="How ABA PayWay works on Odoo eCommerce" class="d-block w-100"
+                        width="1130" height="1298" loading="lazy" style="height:auto;border-radius:12px;">
+                </div>
+            </div>
+
+            <!-- Mobile View: Displays individual Step-1.gif, Step-2.gif, and Step-3.gif for each step -->
+            <div class="d-flex d-lg-none flex-column">
+                <div class="d-flex flex-column bg-white p-2"
+                    style="background:#fff !important;border:1px solid #EAEAEA;border-radius:16px;box-shadow:0 1px 2px rgba(0,44,63,.09),0 2px 7px rgba(0,44,63,.08);">
+                    <div class="d-flex flex-column px-3 pt-3 pb-2">
+                        <h5 class="mb-0"
+                            style="font-family:'Inter','Odoo Unicode Support Noto',sans-serif;font-weight:600;font-size:18px;line-height:1.3;color:#000;">
+                            1. Customer places an order</h5>
+                        <p class="mb-0" style="margin-top:6px;font-size:16px;line-height:1.3;color:rgba(0,0,0,.5);">A
+                            customer adds items to their cart and proceeds to checkout on your Odoo eCommerce website.
+                        </p>
+                    </div>
+                    <div class="w-100 mx-auto" style="margin-top:8px;max-width:404px;">
+                        <img src="Step-1.gif" alt="Customer places an order" class="d-block w-100" width="1130"
+                            height="1298" loading="lazy" style="height:auto;border-radius:16px;">
+                    </div>
+                </div>
+
+                <div class="d-flex flex-column bg-white p-2"
+                    style="margin-top:12px;background:#fff !important;border:1px solid #EAEAEA;border-radius:16px;box-shadow:0 1px 2px rgba(0,44,63,.09),0 2px 7px rgba(0,44,63,.08);">
+                    <div class="d-flex flex-column px-3 pt-3 pb-2">
+                        <h5 class="mb-0"
+                            style="font-family:'Inter','Odoo Unicode Support Noto',sans-serif;font-weight:600;font-size:18px;line-height:1.3;color:#000;">
+                            2. Selects a payment method</h5>
+                        <p class="mb-0" style="margin-top:6px;font-size:16px;line-height:1.3;color:rgba(0,0,0,.5);">Your
+                            customer pays securely with ABA KHQR, Card, WeChat Pay, or Alipay on your Odoo eCommerce
+                            website.</p>
+                    </div>
+                    <div class="w-100 mx-auto" style="margin-top:8px;max-width:404px;">
+                        <img src="Step-2.gif" alt="Selects a payment method" class="d-block w-100" width="1130"
+                            height="1298" loading="lazy" style="height:auto;border-radius:16px;">
+                    </div>
+                </div>
+
+                <div class="d-flex flex-column bg-white p-2"
+                    style="margin-top:12px;background:#fff !important;border:1px solid #EAEAEA;border-radius:16px;box-shadow:0 1px 2px rgba(0,44,63,.09),0 2px 7px rgba(0,44,63,.08);">
+                    <div class="d-flex flex-column px-3 pt-3 pb-2">
+                        <h5 class="mb-0"
+                            style="font-family:'Inter','Odoo Unicode Support Noto',sans-serif;font-weight:600;font-size:18px;line-height:1.3;color:#000;">
+                            3. Order confirmed</h5>
+                        <p class="mb-0" style="margin-top:6px;font-size:16px;line-height:1.3;color:rgba(0,0,0,.5);">
+                            After successful payment, funds settle straight into your ABA account and you can begin
+                            fulfilling the order.</p>
+                    </div>
+                    <div class="w-100 mx-auto" style="margin-top:8px;max-width:404px;">
+                        <img src="Step-3.gif" alt="Order confirmed" class="d-block w-100" width="1130" height="1298"
+                            loading="lazy" style="height:auto;border-radius:16px;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to install Header -->
+            <h4 class="d-none d-sm-block text-center"
+                style="font-family:'Inter','Odoo Unicode Support Noto',sans-serif;font-weight:700;font-size:28px;line-height:1.2;color:#4E4E4E;margin:56px 0 40px;">
+                How to install?</h4>
+            <h4 class="d-block d-sm-none text-center"
+                style="font-family:'Inter','Odoo Unicode Support Noto',sans-serif;font-weight:700;font-size:20px;line-height:1.2;color:#4E4E4E;margin:40px 0 24px;">
+                How to install?</h4>
+
+            <!-- Installation Steps Desktop -->
+            <div class="d-none d-lg-flex"
+                style="border-radius:20px;filter:drop-shadow(0 1px 2px rgba(0,44,63,.09)) drop-shadow(0 2px 7px rgba(0,44,63,.08));">
+                <div class="d-flex flex-column bg-white p-4"
+                    style="flex:1 1 0;min-width:0;background:#fff !important;border-radius:20px 0 0 20px;">
+                    <div>
+                        <h5 class="mb-0"
+                            style="font-family:'Inter','Odoo Unicode Support Noto',sans-serif;font-weight:600;font-size:20px;line-height:24px;color:#000;">
+                            Install the plugin</h5>
+                        <p class="mb-0 mt-2" style="font-size:18px;line-height:24px;color:rgba(0,0,0,.5);">Install the
+                            <span class="fw-bold">ABA PayWay plugin</span> from the Odoo App Store on Odoo 18.
+                        </p>
+                    </div>
+                </div>
+                <div class="position-relative flex-shrink-0"
+                    style="width:72px;margin-left:-12px;margin-right:-8px;z-index:1;">
+                    <img src="sep-horizontal.svg" alt="" class="position-absolute d-block w-100 h-100"
+                        style="inset:0;object-fit:fill;">
+                </div>
+                <div class="d-flex flex-column bg-white p-4"
+                    style="flex:1 1 0;min-width:0;background:#fff !important;border-radius:0;">
+                    <div>
+                        <h5 class="mb-0"
+                            style="font-family:'Inter','Odoo Unicode Support Noto',sans-serif;font-weight:600;font-size:20px;line-height:24px;color:#000;">
+                            Get Sandbox API key</h5>
+                        <p class="mb-0 mt-2" style="font-size:18px;line-height:24px;color:rgba(0,0,0,.5);">Create a free
+                            PayWay Sandbox account to get your test API key.</p>
+                    </div>
+                </div>
+                <div class="position-relative flex-shrink-0"
+                    style="width:72px;margin-left:-12px;margin-right:-8px;z-index:1;">
+                    <img src="sep-horizontal.svg" alt="" class="position-absolute d-block w-100 h-100"
+                        style="inset:0;object-fit:fill;">
+                </div>
+                <div class="d-flex flex-column bg-white p-4"
+                    style="flex:1 1 0;min-width:0;background:#fff !important;border-radius:0;">
+                    <div>
+                        <h5 class="mb-0"
+                            style="font-family:'Inter','Odoo Unicode Support Noto',sans-serif;font-weight:600;font-size:20px;line-height:24px;color:#000;">
+                            Configure &amp; Test</h5>
+                        <p class="mb-0 mt-2" style="font-size:18px;line-height:24px;color:rgba(0,0,0,.5);">Paste your
+                            API key into the plugin in Odoo config, then run a test transaction.</p>
+                    </div>
+                </div>
+                <div class="position-relative flex-shrink-0"
+                    style="width:72px;margin-left:-12px;margin-right:-8px;z-index:1;">
+                    <img src="sep-horizontal.svg" alt="" class="position-absolute d-block w-100 h-100"
+                        style="inset:0;object-fit:fill;">
+                </div>
+                <div class="d-flex flex-column bg-white p-4"
+                    style="flex:1 1 0;min-width:0;background:#fff !important;border-radius:0 20px 20px 0;">
+                    <div>
+                        <h5 class="mb-0"
+                            style="font-family:'Inter','Odoo Unicode Support Noto',sans-serif;font-weight:600;font-size:20px;line-height:24px;color:#000;">
+                            Apply to go live</h5>
+                        <p class="mb-0 mt-2" style="font-size:18px;line-height:24px;color:rgba(0,0,0,.5);">Contact our
+                            sales team to set up your ABA PayWay account and get paid.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Installation Steps Mobile -->
+            <div class="d-flex d-lg-none flex-column"
+                style="filter:drop-shadow(0 1px 2px rgba(0,44,63,.09)) drop-shadow(0 2px 7px rgba(0,44,63,.08));">
+                <div class="position-relative d-flex flex-column align-items-center text-center bg-white p-4 pb-0"
+                    style="margin-top:0;background:#fff !important;border-radius:20px 20px 0 0;">
+                    <h5 class="mb-0 w-100"
+                        style="font-family:'Inter','Odoo Unicode Support Noto',sans-serif;font-weight:600;font-size:16px;line-height:20px;color:#000;">
+                        Install the plugin</h5>
+                    <p class="mb-0 w-100"
+                        style="margin-top:10px;font-size:14px;line-height:20px;color:rgba(0,0,0,.5);max-width:780px;">
+                        Install the <span class="fw-bold">ABA PayWay plugin</span> from the Odoo App Store on Odoo 18.
+                    </p>
+                </div>
+                <div class="position-relative w-100" style="height:80px;margin-top:-1px;">
+                    <img src="sep-vertical.svg" alt="" class="position-absolute d-block w-100 h-100"
+                        style="inset:0;object-fit:fill;">
+                </div>
+                <div class="position-relative d-flex flex-column align-items-center text-center bg-white p-4 pb-0"
+                    style="margin-top:-2px;background:#fff !important;border-radius:0;">
+                    <h5 class="mb-0 w-100"
+                        style="font-family:'Inter','Odoo Unicode Support Noto',sans-serif;font-weight:600;font-size:16px;line-height:20px;color:#000;">
+                        Get Sandbox API key</h5>
+                    <p class="mb-0 w-100"
+                        style="margin-top:10px;font-size:14px;line-height:20px;color:rgba(0,0,0,.5);max-width:780px;">
+                        Create a free PayWay Sandbox account to get your test API key.</p>
+                </div>
+                <div class="position-relative w-100" style="height:80px;margin-top:-1px;">
+                    <img src="sep-vertical.svg" alt="" class="position-absolute d-block w-100 h-100"
+                        style="inset:0;object-fit:fill;">
+                </div>
+                <div class="position-relative d-flex flex-column align-items-center text-center bg-white p-4 pb-0"
+                    style="margin-top:-2px;background:#fff !important;border-radius:0;">
+                    <h5 class="mb-0 w-100"
+                        style="font-family:'Inter','Odoo Unicode Support Noto',sans-serif;font-weight:600;font-size:16px;line-height:20px;color:#000;">
+                        Configure &amp; Test</h5>
+                    <p class="mb-0 w-100"
+                        style="margin-top:10px;font-size:14px;line-height:20px;color:rgba(0,0,0,.5);max-width:780px;">
+                        Paste your API key into the plugin in Odoo config, then run a test transaction.</p>
+                </div>
+                <div class="position-relative w-100" style="height:80px;margin-top:-1px;">
+                    <img src="sep-vertical.svg" alt="" class="position-absolute d-block w-100 h-100"
+                        style="inset:0;object-fit:fill;">
+                </div>
+                <div class="d-flex flex-column align-items-center text-center bg-white p-4"
+                    style="margin-top:-1px;background:#fff !important;border-radius:0 0 20px 20px;">
+                    <h5 class="mb-0 w-100"
+                        style="font-family:'Inter','Odoo Unicode Support Noto',sans-serif;font-weight:600;font-size:16px;line-height:20px;color:#000;">
+                        Apply to go live</h5>
+                    <p class="mb-0 w-100"
+                        style="margin-top:10px;font-size:14px;line-height:20px;color:rgba(0,0,0,.5);max-width:780px;">
+                        Contact our sales team to set up your ABA PayWay account and get paid.</p>
+                </div>
+            </div>
+
+            <!-- Footer Links -->
+            <p class="d-none d-sm-block text-center mb-0"
+                style="margin-top:40px;font-size:18px;line-height:1.4;color:rgba(0,0,0,.5);">
+                For more detailed information, please visit:
+                <a href="https://developer.payway.com.kh/-2113617m0" target="_blank" rel="noopener noreferrer"
+                    style="color:#00BCD4;font-weight:700;text-decoration:none;white-space:nowrap;">https://developer.payway.com.kh/-2113617m0</a>
+            </p>
+            <p class="d-block d-sm-none text-center mb-0"
+                style="margin-top:28px;font-size:14px;line-height:1.5;color:rgba(0,0,0,.5);overflow-wrap:break-word;">
+                For more detailed information, please visit:<br>
+                <a href="https://developer.payway.com.kh/-2113617m0" target="_blank" rel="noopener noreferrer"
+                    style="color:#00BCD4;font-weight:700;text-decoration:none;overflow-wrap:anywhere;">https://developer.payway.com.kh/-2113617m0</a>
+            </p>
+
+        </div>
+    </div>
+</body>
+
+</html>

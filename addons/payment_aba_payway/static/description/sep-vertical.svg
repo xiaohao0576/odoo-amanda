@@ -1,0 +1,6 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block; margin: -1px 0;" viewBox="0 -2 288 66.6666" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="-2" width="288" height="4" fill="var(--fill-0, white)"/>
+  <path d="M288 1.25889e-05C288 8.56921 282.089 16.006 273.741 17.9402L148.514 46.9541C145.544 47.6423 142.456 47.6423 139.486 46.9541L14.2588 17.9401C5.91073 16.006 -1.03033e-05 8.5692 -9.92877e-06 0L288 1.25889e-05Z" fill="var(--fill-0, white)"/>
+  <path d="M288 62.6665L288 40.5951C288 34.1564 282.004 29.3958 275.733 30.8555L148.534 60.4639C145.551 61.1583 142.449 61.1583 139.466 60.4639L12.2671 30.8555C5.9961 29.3957 1.24622e-06 34.1564 9.64773e-07 40.5951L0 62.6665L288 62.6665Z" fill="var(--fill-0, white)"/>
+  <rect x="0" y="60.6665" width="288" height="6" fill="var(--fill-0, white)"/>
+</svg>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="payment_capture_wizard_view_form_aba_payway" model="ir.ui.view">
+        <field name="name">payment.capture.wizard.force.void.remaining</field>
+        <field name="model">payment.capture.wizard</field>
+        <field name="inherit_id" ref="payment.payment_capture_wizard_view_form"/>
+
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='void_remaining_amount']" position="attributes">
+                <attribute name="invisible">_is_payway_provider</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='void_remaining_amount']" position="after">
+                <p class="alert alert-warning" invisible="not _is_payway_provider">
+                    ABA PayWay provider will automatically void the remaining amount when capturing partially.
+                </p>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
