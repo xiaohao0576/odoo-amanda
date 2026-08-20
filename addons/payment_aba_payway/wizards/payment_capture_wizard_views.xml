@@ -12,7 +12,7 @@
             </xpath>
 
             <xpath expr="//field[@name='void_remaining_amount']" position="after">
-                <p class="alert alert-warning" invisible="not _is_payway_provider">
+                <p class="alert alert-warning" role="alert" invisible="not _is_payway_provider">
                     ABA PayWay provider will automatically void the remaining amount when capturing partially.
                 </p>
             </xpath>

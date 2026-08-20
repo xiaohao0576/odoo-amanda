@@ -3,7 +3,7 @@ import pprint
 from urllib.parse import urljoin
 import logging
 
-from odoo import _, models
+from odoo import _, api, models
 from odoo.addons.payment import utils as payment_utils
 from odoo.tools import float_compare, float_round
 from odoo.exceptions import ValidationError
@@ -29,7 +29,7 @@ class PaymentTransaction(models.Model):
             return super()._compute_reference(provider_code, prefix=prefix, **kwargs)
 
         if not prefix:
-            prefix = self.sudo()._compute_reference_prefix(provider_code, separator, **kwargs)
+            prefix = self.sudo()._compute_reference_prefix(separator, **kwargs)
 
         prefix = payway_utils._compute_payway_tran_id(prefix=prefix, separator=separator)
 
@@ -70,7 +70,7 @@ class PaymentTransaction(models.Model):
         )
 
         base_odoo_url: str = (
-            self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+            self.env['ir.config_parameter'].sudo().get_str('web.base.url')
         )
 
         webhook_url = urljoin(
@@ -227,6 +227,16 @@ class PaymentTransaction(models.Model):
         if provider_code != 'aba_payway':
             return super()._extract_reference(provider_code, payment_data)
         return payment_data.get('reference') or payment_data.get('tran_id')
+
+    def _extract_amount_data(self, payment_data):
+        """Override of `payment` to skip the generic amount check.
+
+        The amount and currency are already validated against the PayWay API response in
+        `_payway_validate_transaction_detail`, called from `_apply_updates`.
+        """
+        if self.provider_code != 'aba_payway':
+            return super()._extract_amount_data(payment_data)
+        return None
 
     def _apply_updates(self, payment_data):
         """Override of `payment` to update the transaction from ABA PayWay data."""

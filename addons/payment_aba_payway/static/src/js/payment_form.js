@@ -27,7 +27,6 @@ patch(PaymentForm.prototype, {
      */
     async _prepareInlineForm(providerId, providerCode, paymentOptionId, paymentMethodCode, flow) {
         if (providerCode !== 'aba_payway') {
-        * @override method from @payment/interactions/payment_form
             return;
         }
 
