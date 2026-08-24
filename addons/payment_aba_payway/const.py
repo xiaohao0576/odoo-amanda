@@ -58,6 +58,9 @@ WEB_HOOK_PATH = {
     'poll': '/payment/payway/status/poll',
 }
 
+PAYWAY_LIFETIME_MINUTES = 3
+PAYWAY_POLL_INTERVAL_SECONDS = 3
+
 STATUS_MAPPING = {
     'APPROVED': 'APPROVED',
     'PRE-AUTH': 'PRE-AUTH',

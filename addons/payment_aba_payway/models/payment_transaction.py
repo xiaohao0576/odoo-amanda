@@ -59,6 +59,7 @@ class PaymentTransaction(models.Model):
             else (None, None)
         )
         payment_option = const.PAYMENT_METHODS_MAPPING[self.payment_method_id.code]
+        payment_lifetime_minutes = const.PAYWAY_LIFETIME_MINUTES
 
         # The amount is explicitly converted to a string to prevent a hash mismatch.
         # This avoids issues where JavaScript drops trailing zeros from numbers (e.g., 23.0 becomes 23),
@@ -104,6 +105,7 @@ class PaymentTransaction(models.Model):
             'merchant_id': merchant_id,
             'currency': self.currency_id.name,
             'skip_success_page': 1,
+            'lifetime': payment_lifetime_minutes,
             'return_url': encoded_return_url,
             'continue_success_url': urljoin(base_odoo_url, '/payment/status'),
         }
@@ -269,6 +271,23 @@ class PaymentTransaction(models.Model):
                 else api_payment_status
             )
         )
+
+        if is_from_webhook and payment_status in (
+            const.STATUS_MAPPING['APPROVED'],
+            const.STATUS_MAPPING['PRE-AUTH'],
+            const.STATUS_MAPPING['CANCELLED'],
+        ):
+            try:
+                confirm_detail = self.provider_id._payway_api_get_transaction_detail(tran_id)
+            except ValidationError as err:
+                _logger.warning(
+                    "Webhook confirmation check failed for transaction %s and provider reference %s; Error: %s",
+                    self.reference,
+                    tran_id,
+                    str(err),
+                )
+            else:
+                payment_status = confirm_detail.get('data', {}).get('payment_status', '').upper() or payment_status
 
         is_valid_settlement, settlement_validation_message = self._payway_validate_transaction_detail(
             payway_transaction_detail,

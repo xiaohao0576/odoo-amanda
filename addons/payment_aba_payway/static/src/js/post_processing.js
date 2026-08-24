@@ -9,7 +9,9 @@ patch(PaymentPostProcessing.prototype, {
 
     setup() {
         super.setup();
-        this.pollPaywayTimeout = 10000;
+        this.pollPaywayIntervalMs = 3000;
+        this.pollPaywayLifetimeMs = 3 * 60 * 1000;
+        this.pollPaywayElapsedMs = 0;
     },
 
     start() {
@@ -18,32 +20,36 @@ patch(PaymentPostProcessing.prototype, {
     },
 
     _pollPayway() {
-        /** 
-         * Waiting 10 sec for webhook to completed, if it is not complete.
-         * start polling payway payment status every 3 seconds
-        */
+        /**
+         * ABA PayWay requires a confirmation loop while the payment is still alive.
+         * We poll every 3 seconds until the configured lifetime limit (default 3 minutes).
+         */
+        if (this.pollPaywayElapsedMs >= this.pollPaywayLifetimeMs) {
+            return;
+        }
 
         setTimeout(async () => {
+            if (this.pollPaywayElapsedMs >= this.pollPaywayLifetimeMs) {
+                return;
+            }
+            this.pollPaywayElapsedMs += this.pollPaywayIntervalMs;
+
             rpc('/payment/payway/status/poll', {
                 'csrf_token': odoo.csrf_token,
-
             }).then((postProcessingValues) => {
                 let { provider_code, state } = postProcessingValues;
-                if (
-                    provider_code != 'aba_payway'
+                const isFinalState = provider_code != 'aba_payway'
                     || PaymentPostProcessing.getFinalStates(provider_code).has(state)
-                ) {
+                    || this.pollPaywayElapsedMs >= this.pollPaywayLifetimeMs;
+
+                if (isFinalState) {
                     return;
                 }
-                else {
-                    this.pollPaywayTimeout = 3000;
-                    this._pollPayway();
-                }
+                this._pollPayway();
             }).catch(error => {
                 const isRetryError = error instanceof RPCError && error.data.message === 'retry';
                 const isConnectionLostError = error instanceof ConnectionLostError;
                 if (isRetryError || isConnectionLostError) {
-                    this.pollPaywayTimeout = 3000;
                     this._pollPayway();
                 }
                 if (!isRetryError) {
@@ -51,6 +57,6 @@ patch(PaymentPostProcessing.prototype, {
                 }
             });
 
-        }, this.pollPaywayTimeout);
+        }, this.pollPaywayIntervalMs);
     }
 });
