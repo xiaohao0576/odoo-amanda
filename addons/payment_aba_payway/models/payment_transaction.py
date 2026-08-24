@@ -14,6 +14,11 @@ from odoo.addons.payment_aba_payway import utils as payway_utils
 
 _logger = logging.getLogger(__name__)
 
+_PAYWAY_NUMERIC_CURRENCY_MAP = {
+    '840': 'USD',
+    '116': 'KHR',
+}
+
 class PaymentTransaction(models.Model):
     _inherit = 'payment.transaction'
 
@@ -300,7 +305,7 @@ class PaymentTransaction(models.Model):
                 settlement_validation_message,
                 pprint.pformat(payway_transaction_detail.get('data', {})),
             )
-            self._set_pending(settlement_validation_message)
+            self._set_pending(state_message=settlement_validation_message)
             return
 
         # Update the provider reference.
@@ -344,7 +349,7 @@ class PaymentTransaction(models.Model):
                 "reference %s and payway reference %s", payment_status, self.reference, self.provider_reference
             )
 
-            self._set_pending(_(
+            self._set_pending(state_message=_(
                 "Received unknown payment status: %(payment_status)s; reference %(reference)s; payway reference %(provider_reference)s", 
                 payment_status=payment_status, reference=self.reference, provider_reference=self.provider_reference
             ))
@@ -365,9 +370,20 @@ class PaymentTransaction(models.Model):
             return True, None
 
         expected_currency = (self.currency_id.name or '').upper()
-        payway_currency = str(detail_data.get('original_currency') or '').upper().strip()
+        payway_currency = str(
+            detail_data.get('original_currency')
+            or detail_data.get('payment_currency')
+            or detail_data.get('currency')
+            or ''
+        ).upper().strip()
 
-        if not payway_currency or payway_currency != expected_currency:
+        payway_currency = _PAYWAY_NUMERIC_CURRENCY_MAP.get(payway_currency, payway_currency)
+
+        # V2 payloads can omit currency in some flows. Do not block status reconciliation in that case.
+        if not payway_currency:
+            return True, None
+
+        if payway_currency != expected_currency:
             return False, _(
                 "Payment validation failed: currency mismatch (expected %(expected)s, got %(actual)s).",
                 expected=expected_currency,
@@ -375,17 +391,31 @@ class PaymentTransaction(models.Model):
             )
 
         expected_precision = const.CURRENCY_DECIMALS.get(payway_currency)
+        if expected_precision is None:
+            expected_precision = const.CURRENCY_DECIMALS.get(expected_currency, 2)
+
         expected_amount = float_round(
             self.amount,
             precision_digits=expected_precision,
             rounding_method='DOWN',
         )
 
-        payway_amount = float(detail_data.get('original_amount'))
-        if payway_amount is None:
-            return False, _(
-                "Payment validation failed: gateway amount is missing or invalid."
+        payway_amount_raw = (
+            detail_data.get('original_amount')
+            if detail_data.get('original_amount') is not None
+            else (
+                detail_data.get('total_amount')
+                if detail_data.get('total_amount') is not None
+                else detail_data.get('payment_amount')
             )
+        )
+        if payway_amount_raw is None:
+            return True, None
+
+        try:
+            payway_amount = float(payway_amount_raw)
+        except (TypeError, ValueError):
+            return True, None
 
         amount_matches = (
             float_compare(

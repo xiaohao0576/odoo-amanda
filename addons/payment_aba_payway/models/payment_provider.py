@@ -207,7 +207,8 @@ class PaymentProvider(models.Model):
             api_url, '/api/payment-gateway/v1/payments/check-transaction-2', payload
         )
 
-        if str(response['status']['code']) == '00':
+        status = response.get('status') or response.get('data', {}).get('status', {})
+        if str(status.get('code')) == '00':
             return response
 
         raise ValidationError(self._payway_construct_error_message(response))
@@ -328,7 +329,7 @@ class PaymentProvider(models.Model):
         :return: A formatted error string.
         :rtype: str
         """
-        status = response.get('status', {})
+        status = response.get('status') or response.get('data', {}).get('status', {})
         main_msg = status.get('message', _("An unexpected error occurred."))
         errors = status.get('errors', {})
 

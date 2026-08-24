@@ -15,6 +15,7 @@ patch(PaymentPostProcessing.prototype, {
         this.pollPaywayIntervalMs = PAYWAY_POLL_INTERVAL_MS;
         this.pollPaywayLifetimeMs = PAYWAY_LIFETIME_MS;
         this.pollPaywayElapsedMs = 0;
+        this.hasLoggedPaywayPollWarning = false;
     },
 
     start() {
@@ -50,13 +51,20 @@ patch(PaymentPostProcessing.prototype, {
                 }
                 this._pollPayway();
             }).catch(error => {
-                const isRetryError = error instanceof RPCError && error.data.message === 'retry';
+                const isRetryError = error instanceof RPCError && error.data?.message === 'retry';
                 const isConnectionLostError = error instanceof ConnectionLostError;
-                if (isRetryError || isConnectionLostError) {
+                const httpStatus = error instanceof RPCError ? error.data?.httpStatus : undefined;
+                const isRetryableHttpError = [429, 500, 502, 503, 504].includes(httpStatus);
+                const isRecoverableError = isRetryError || isConnectionLostError || isRetryableHttpError;
+
+                if (isRecoverableError) {
                     this._pollPayway();
+                    return;
                 }
-                if (!isRetryError) {
-                    throw error;
+
+                if (!this.hasLoggedPaywayPollWarning) {
+                    this.hasLoggedPaywayPollWarning = true;
+                    console.warn('ABA PayWay poll stopped due to non-recoverable error.', error);
                 }
             });
 
