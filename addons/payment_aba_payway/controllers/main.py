@@ -58,6 +58,9 @@ class PayWayController(http.Controller):
                 'state': 'error',
             }
 
+        poll_interval_seconds = const.PAYWAY_POLL_INTERVAL_SECONDS
+        poll_lifetime_seconds = const.PAYWAY_LIFETIME_MINUTES * 60
+
         if monitored_tx and monitored_tx.provider_code == 'aba_payway':
             try:
                 data = {
@@ -77,6 +80,8 @@ class PayWayController(http.Controller):
         return {
             'provider_code': monitored_tx.provider_code,
             'state': monitored_tx.state,
+            'poll_interval_seconds': poll_interval_seconds,
+            'poll_lifetime_seconds': poll_lifetime_seconds,
         }
     
     @staticmethod

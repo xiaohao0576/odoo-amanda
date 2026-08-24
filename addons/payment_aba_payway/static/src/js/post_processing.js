@@ -8,6 +8,11 @@ import { PaymentPostProcessing } from '@payment/interactions/post_processing';
 const PAYWAY_POLL_INTERVAL_MS = 3000;
 const PAYWAY_LIFETIME_MS = 3 * 60 * 1000;
 
+function _toPositiveInt(value, fallback) {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) && parsed > 0 ? Math.floor(parsed) : fallback;
+}
+
 patch(PaymentPostProcessing.prototype, {
 
     setup() {
@@ -42,6 +47,19 @@ patch(PaymentPostProcessing.prototype, {
                 'csrf_token': odoo.csrf_token,
             }).then((postProcessingValues) => {
                 let { provider_code, state } = postProcessingValues;
+                if (provider_code === 'aba_payway') {
+                    const pollIntervalSeconds = _toPositiveInt(
+                        postProcessingValues.poll_interval_seconds,
+                        this.pollPaywayIntervalMs / 1000,
+                    );
+                    const pollLifetimeSeconds = _toPositiveInt(
+                        postProcessingValues.poll_lifetime_seconds,
+                        this.pollPaywayLifetimeMs / 1000,
+                    );
+                    this.pollPaywayIntervalMs = pollIntervalSeconds * 1000;
+                    this.pollPaywayLifetimeMs = pollLifetimeSeconds * 1000;
+                }
+
                 const isFinalState = provider_code != 'aba_payway'
                     || PaymentPostProcessing.getFinalStates(provider_code).has(state)
                     || this.pollPaywayElapsedMs >= this.pollPaywayLifetimeMs;
