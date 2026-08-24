@@ -1,4 +1,5 @@
 from datetime import datetime
+import base64
 import pprint
 from urllib.parse import urljoin
 import logging
@@ -81,6 +82,7 @@ class PaymentTransaction(models.Model):
             ),
             const.WEB_HOOK_PATH['webhook'],
         )
+        encoded_return_url = base64.b64encode(webhook_url.encode('utf-8')).decode('utf-8')
 
         rendering_values = {
             'form_url': api_url + '/api/payment-gateway/v1/payments/purchase',
@@ -102,7 +104,7 @@ class PaymentTransaction(models.Model):
             'merchant_id': merchant_id,
             'currency': self.currency_id.name,
             'skip_success_page': 1,
-            'return_url': webhook_url,
+            'return_url': encoded_return_url,
             'continue_success_url': urljoin(base_odoo_url, '/payment/status'),
         }
 
