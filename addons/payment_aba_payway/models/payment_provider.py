@@ -190,6 +190,7 @@ class PaymentProvider(models.Model):
         return base64_encoded
 
     def _payway_api_get_transaction_detail(self, tran_id: str):
+        """Check transaction status with ABA PayWay V2 check-transaction API."""
         self.ensure_one()
 
         api_url, merchant_id, api_key, _ = self._payway_get_api_cred()
@@ -203,7 +204,7 @@ class PaymentProvider(models.Model):
         )
 
         response = _make_payway_api_request(
-            api_url, '/api/payment-gateway/v1/payments/transaction-detail', payload
+            api_url, '/api/payment-gateway/v1/payments/check-transaction-2', payload
         )
 
         if str(response['status']['code']) == '00':
