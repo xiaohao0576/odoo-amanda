@@ -89,7 +89,6 @@ class PaymentTransaction(models.Model):
             'form_url': api_url + '/api/payment-gateway/v1/payments/purchase',
             'tran_id': self.reference,
             'req_time': req_time,
-            'lifetime': 3,
             'firstname': partner_first_name and partner_first_name[:20] or '',
             'lastname': partner_last_name and partner_last_name[:20] or '',
             'email': (

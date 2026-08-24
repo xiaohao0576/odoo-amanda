@@ -5,12 +5,15 @@ import { patch } from '@web/core/utils/patch';
 
 import { PaymentPostProcessing } from '@payment/interactions/post_processing';
 
+const PAYWAY_POLL_INTERVAL_MS = 3000;
+const PAYWAY_LIFETIME_MS = 3 * 60 * 1000;
+
 patch(PaymentPostProcessing.prototype, {
 
     setup() {
         super.setup();
-        this.pollPaywayIntervalMs = 3000;
-        this.pollPaywayLifetimeMs = 3 * 60 * 1000;
+        this.pollPaywayIntervalMs = PAYWAY_POLL_INTERVAL_MS;
+        this.pollPaywayLifetimeMs = PAYWAY_LIFETIME_MS;
         this.pollPaywayElapsedMs = 0;
     },
 
