@@ -24,7 +24,6 @@ patch(PaymentPostProcessing.prototype, {
     },
 
     start() {
-        super.start(...arguments);
         this._pollPayway();
     },
 
@@ -46,7 +45,7 @@ patch(PaymentPostProcessing.prototype, {
             rpc('/payment/payway/status/poll', {
                 'csrf_token': odoo.csrf_token,
             }).then((postProcessingValues) => {
-                let { provider_code, state } = postProcessingValues;
+                let { provider_code, state, landing_route } = postProcessingValues;
                 if (provider_code === 'aba_payway') {
                     const pollIntervalSeconds = _toPositiveInt(
                         postProcessingValues.poll_interval_seconds,
@@ -65,6 +64,9 @@ patch(PaymentPostProcessing.prototype, {
                     || this.pollPaywayElapsedMs >= this.pollPaywayLifetimeMs;
 
                 if (isFinalState) {
+                    if (landing_route && PaymentPostProcessing.getFinalStates(provider_code).has(state)) {
+                        window.location = landing_route;
+                    }
                     return;
                 }
                 this._pollPayway();

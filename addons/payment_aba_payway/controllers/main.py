@@ -56,6 +56,7 @@ class PayWayController(http.Controller):
             return {
                 'provider_code': None,
                 'state': 'error',
+                'landing_route': '/payment/status',
             }
 
         poll_interval_seconds = const.PAYWAY_POLL_INTERVAL_SECONDS
@@ -80,6 +81,7 @@ class PayWayController(http.Controller):
         return {
             'provider_code': monitored_tx.provider_code,
             'state': monitored_tx.state,
+            'landing_route': monitored_tx.landing_route,
             'poll_interval_seconds': poll_interval_seconds,
             'poll_lifetime_seconds': poll_lifetime_seconds,
         }
